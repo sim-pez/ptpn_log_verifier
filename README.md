@@ -36,7 +36,7 @@ t5
 260
 ...
 ```
-Noteてゃｔ, you need to provide the same transition name of PTPN transitions
+Note that you need to provide the same transition name of PTPN transitions
 
 
 # Acknowledgments

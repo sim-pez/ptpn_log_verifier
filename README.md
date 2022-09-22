@@ -8,7 +8,7 @@ We try to read a preemptive time petri net (PTPN) and verify the feasibility of 
 
 For a detailed description of the experiments and results obtained refer to the project [presentation]() (coming soon).
 
-## Algorithm
+### Algorithm
 Here is the pseudo-algorithm to check the log feasibility:
 
 1. Read next transition *t* and time to fire *tau* from log
@@ -18,10 +18,11 @@ Here is the pseudo-algorithm to check the log feasibility:
 5. Check if *tau* is <= max<sub>t'</sub> for each progressing transition t'
 6. If all above checks are ok, update the time to fire of enabled transitions and go to 1
 
-# PTPN
+# Inputs 
+### PTPN
 You need to create a PTPN model of your real time program. We reccomend to use **Oris tool**\[3\] in order to create Java code from a graphic model
 
-# Log format
+### Log
 The log file must be a `.txt` file in this format:
 ```
 [transition name]
@@ -42,11 +43,63 @@ t5
 ```
 Note that you need to provide the same transition name of PTPN transitions
 
-## Repository structure
+
+
+# Repository structure
 The respository extension is structured as follows:
 - The ```src/main/java/org/oristool/logVerifier/LogVerifier.java```
 Class contains the public method *isLogFeasible(PetriNet pn, String logName, Marking m)* which returns a boolean value indicating the log feasibility.
-- ```src/test/java/org/oristool/logVerifier/LogVerifierTest.java``` is a JUnitTest where we have used a PTPN and a log to test the LogVerifier Class (please check the Example section).
+- ```src/test/java/org/oristool/logVerifier/LogVerifierTest.java``` is a JUnit Test where we have used a PTPN and a log to test the LogVerifier Class (please check the Example section).
+
+# Example
+This is the PTPN model used in JUnit Test
+<p float="left" align="center">
+  <img src="docs/ptpn_macchiarininutipuccia.PNG" width="80%"  />
+</p>
+
+the ```log.txt``` file is like this:
+```
+t0
+910
+t1
+0
+t2
+0
+t5
+70
+t3
+30
+t4
+150
+...
+```
+
+## Output
+The output will be:
+```
+Checking t0 910
+Passed. Updated enabled transitions are: [t0, t1, t5]
+Checking t1 0
+Passed. Updated enabled transitions are: [t0, t2, t5]
+Checking t2 0
+Passed. Updated enabled transitions are: [t0, t3, t5]
+Checking t5 70
+Passed. Updated enabled transitions are: [t0, t3, t5, t6]
+...
+Log feasible: true
+```
+
+Now let's change the log to something unfeasible. For example, if you chage the first time to fire of *t2* to 10 (instead of 0), the output changes to:
+```
+Checking t0 910
+Passed. Updated enabled transitions are: [t0, t1, t5]
+Checking t1 0
+Passed. Updated enabled transitions are: [t0, t2, t5]
+Checking t2 10
+Time to fire of transition t2 non fesible!
+Log feasible: false
+```
+
 
 ## Bibliography
 \[1\] Sirio Library: [https://github.com/oris-tool/sirio](https://github.com/oris-tool/sirio).

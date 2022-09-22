@@ -2,7 +2,11 @@
 
 
 # Introduction
-This program reads a preemptive time petri net (PTPN) and verifies the feasibility of a real time program execution log. This work is based on [Sirio Library](https://github.com/oris-tool/sirio) and is an extension of @[loremacchia](https://github.com/loremacchia)'s work.
+Preemptive Time Petri Nets (**PTPNs**) support modeling and analysis of concurrent timed SW components running under fixed priority preemptive scheduling. 
+This work is based on the [Sirio Library](https://github.com/oris-tool/sirio)\[1\] and is an extension of **Lorenzo Macchiarini**\[2\] work. 
+We try to read a preemptive time petri net (PTPN) and verify the feasibility of a real time program execution log. 
+
+For a detailed description of the experiments and results obtained refer to the project [presentation]() (coming soon).
 
 ## Algorithm
 Here is the pseudo-algorithm to check the log feasibility:
@@ -15,9 +19,9 @@ Here is the pseudo-algorithm to check the log feasibility:
 6. If all above checks are ok, update the time to fire of enabled transitions and go to 1
 
 # PTPN
-You need to create a PTPN model of your real time program. We reccomend to use [Oris tool](https://www.oris-tool.org/) in order to create Java code from a graphic model
+You need to create a PTPN model of your real time program. We reccomend to use **Oris tool**\[3\] in order to create Java code from a graphic model
 
-# log format
+# Log format
 The log file must be a `.txt` file in this format:
 ```
 [transition name]
@@ -38,6 +42,18 @@ t5
 ```
 Note that you need to provide the same transition name of PTPN transitions
 
+## Repository structure
+The respository extension is structured as follows:
+- The ```src/main/java/org/oristool/logVerifier/LogVerifier.java```
+Class contains the public method *isLogFeasible(PetriNet pn, String logName, Marking m)* which returns a boolean value indicating the log feasibility.
+- ```src/test/java/org/oristool/logVerifier/LogVerifierTest.java``` is a JUnitTest where we have used a PTPN and a log to test the LogVerifier Class (please check the Example section).
+
+## Bibliography
+\[1\] Sirio Library: [https://github.com/oris-tool/sirio](https://github.com/oris-tool/sirio).
+
+\[2\] Lorenzo Macchiarini GitHub profile: [https://github.com/loremacchia](https://github.com/loremacchia).
+
+\[3\] Oris Tool: [https://github.com/oris-tool/sirio](https://www.oris-tool.org/).
 
 # Acknowledgments
 Software Engineering for Embedded Systems - Computer Engineering Master Degree @[University of Florence](https://www.unifi.it/changelang-eng.html).
